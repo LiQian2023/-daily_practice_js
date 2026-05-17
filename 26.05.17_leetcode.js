@@ -31,29 +31,12 @@
  * @return {boolean}
  */
 var canReach = function (arr, start) {
-    const visited = new Array(arr.length).fill(0);
-    let l = false,
-        r = false;
+    const visited = new Array(arr.length).fill(false);
     function dfs(i) {
-        if (i < 0 || i >= arr.length) return false;
+        if (i < 0 || i >= arr.length || visited[i]) return false;
         if (arr[i] === 0) return true;
-        if (visited[i] === 2) return false;
-        let left = true,
-            right = true;
-        if (visited[i] === 0) {
-            left = false;
-        }
-        visited[i] += 1;
-        if (!left) {
-            l = dfs(i - arr[i]);
-        }
-        if (visited[i] === 1) {
-            right = false;
-        }
-        if (!right) {
-            r = dfs(i + arr[i]);
-        }
-        return l || r;
+        visited[i] = true;
+        return dfs(i + arr[i]) || dfs(i - arr[i]);
     }
     return dfs(start);
 };
