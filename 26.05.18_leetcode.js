@@ -33,3 +33,33 @@ var isAdjacentDiffAtMostTwo = function (s) {
     }
     return true;
 };
+
+// 89. a ^ b——位运算、快速幂——简单
+// 求 a 的 b 次方对 p 取模的值。
+// 输入格式
+// 三个整数 a, b, p
+// , 在同一行用空格隔开。
+// 输出格式
+// 输出一个整数，表示a^ b mod p的值。
+// 数据范围
+// 0≤a, b≤10^9
+// 1≤p≤10^9
+// 输入样例：
+// 3 2 7
+// 输出样例：
+// 2
+
+const fs = require("fs");
+const input = fs.readFileSync(0, "utf8").trim().split(/\s+/);
+const [a, b, p] = input.map(BigInt);
+
+function myPow(a, b, p) {
+    let result = 1n % p;
+    for (; b > 0; b >>= 1n) {
+        if (b & 1n) result = (result * a) % p;
+        a = (a * a) % p;
+    }
+    return result;
+}
+
+console.log(myPow(a, b, p).toString());
