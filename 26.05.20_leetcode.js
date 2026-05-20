@@ -96,3 +96,32 @@ AnimalShelf.prototype.dequeueCat = function () {
  * var param_3 = obj.dequeueDog()
  * var param_4 = obj.dequeueCat()
  */
+
+//2026.05.20力扣网刷题
+//90. 64位整数乘法——位运算——简单
+//求 a 乘 b 对 p 取模的值。
+//输入格式
+//第一行输入整数a，第二行输入整数b，第三行输入整数p。
+//输出格式
+//输出一个整数，表示a * b mod p的值。
+//数据范围
+//1≤a, b, p≤10^18
+//输入样例：
+//3
+//4
+//5
+//输出样例：
+//2
+
+const fs = require("fs");
+const [a, b, p] = fs.readFileSync(0, "utf8").trim().split(/\s+/).map(BigInt);
+function myMul(a, b, p) {
+    let ans = 0n;
+    while (b > 0n) {
+        if (b & 1n) ans = (ans + a) % p;
+        a = (a * 2n) % p;
+        b >>= 1n;
+    }
+    return ans;
+}
+console.log(myMul(a, b, p).toString());
